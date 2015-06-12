@@ -85,7 +85,11 @@
 ; (valid-values-for sudoku-board [0 0]) ;=> #{}
 ; (valid-values-for sudoku-board [0 2]) ;=> #{1 2 4})
 (defn valid-values-for [board coord]
-  nil)
+  (if (has-value? board coord)
+    #{}
+    (set/difference all-values (row-values board coord) (col-values board coord) (block-values board coord))
+  )
+)
 
 ; Write the function (filled? board) which returns true if there are no
 ; empty squares in board, and otherwise false.
