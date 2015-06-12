@@ -100,8 +100,12 @@
 ;
 ; (filled? sudoku-board) ;=> false
 ; (filled? solved-board) ;=> true
+(defn get-all-numbers-in-a-sequence [board]
+  (apply set/union (map #(set %) board)))
+
 (defn filled? [board]
-  nil)
+  (not (contains? (get-all-numbers-in-a-sequence board) 0))
+)
 
 ; Write the function (rows board) that returns a sequence of value sets
 ; for each row of board. That is, the first set in (rows board) is a set
