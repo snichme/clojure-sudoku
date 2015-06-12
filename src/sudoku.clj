@@ -131,7 +131,8 @@
 ;                     ;    #{1 2 3 4 5 6 7 8 9}
 ;                     ;    #{1 2 3 4 5 6 7 8 9}]
 (defn rows [board]
-  nil)
+  (for [i board]
+      (set i)))
 
 ; Write the function (valid-rows? board) that returns true if every row
 ; in board is a valid filled row.
@@ -139,7 +140,7 @@
 ; (valid-rows? solved-board)  ;=> truthy
 ; (valid-rows? invalid-board) ;=> falsey
 (defn valid-rows? [board]
-  nil)
+nil)
 
 ; Write the function (cols board) that returns the values of each column
 ; in board as a sequence of sets.
