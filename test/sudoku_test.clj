@@ -76,6 +76,10 @@
                                  [1 0] [1 1] [1 2]
                                  [2 0] [2 1] [2 2]])
 
+(facts "get-top-left-coordinates"
+  (get-top-left-coordinates [1, 0]) => [0,0]
+  (get-top-left-coordinates [5, 8]) => [3,6]
+  (get-top-left-coordinates [7, 6]) => [6,6])
 
 (facts "block-values" {:exercise 6
                        :points 1}

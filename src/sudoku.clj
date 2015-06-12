@@ -11,7 +11,9 @@
 ; (value-at sudoku-board [0 1]) ;=> 3
 ; (value-at sudoku-board [0 0]) ;=> 5
 (defn value-at [board coord]
-  nil)
+  (let [y (first coord)
+        x (second coord)]
+    (get (get board y) x)))
 
 ; Write the function (has-value? board coordinates)
 ; that returns false if the square at coordinates is empty (has 0),
@@ -20,7 +22,7 @@
 ; (has-value? sudoku-board [0 0]) ;=> true
 ; (has-value? sudoku-board [0 2]) ;=> false
 (defn has-value? [board coord]
-  nil)
+  (not (zero? (value-at board coord))))
 
 ; Write the function (row-values board coordinates) that returns
 ; a set with all numbers on the row of the coordinates
@@ -29,16 +31,16 @@
 ;
 ; (row-values sudoku-board [0 2]) ;=> #{0 5 3 7}
 ; (row-values sudoku-board [3 2]) ;=> #{0 8 6 3}
-(defn row-values [board coord]
-  nil)
+(defn row-values [board [y _]]
+  (set (get board y)))
 
 ; Write the function (col-values board coordinates) that returns
 ; a set with all numbers on the col of the coordinates
 ;
 ; (col-values sudoku-board [0 2]) ;=> #{0 8}
 ; (col-values sudoku-board [4 8]) ;=> #{3 1 6 0 5 9}
-(defn col-values [board coord]
-  nil)
+(defn col-values [board [_ x]]
+  (set (map #(get % x) board)))
 
 ; Write the function (coord-pairs coord-sequence) that returns all
 ; coordinate-pairs of the form [row col] where row is from coord-sequence
@@ -51,7 +53,9 @@
 ;                       ;    [1 0] [1 1] [1 2]
 ;                       ;    [2 0] [2 1] [2 2]]
 (defn coord-pairs [coords]
-  nil)
+  (for [i coords
+        j coords]
+          [i j]))
 
 ; Write the function (block-values board coordinates) that returns a set
 ; with all numbers in the block of coordinates.
@@ -60,8 +64,17 @@
 ;
 ; (block-values sudoku-board [0 2]) ;=> #{0 5 3 6 8 9}
 ; (block-values sudoku-board [4 5]) ;=> #{0 6 8 3 2}
+(defn get-top-left-coordinates [coord]
+  (let [y (first coord)
+        x (second coord)]
+          [(- y (mod y 3)) (- x (mod x 3))]))
+
 (defn block-values [board coord]
-  nil)
+  (set
+    (let [top-left (get-top-left-coordinates coord)]
+      (for [i (range (first top-left) (+ (first top-left) 3))
+            j (range (second top-left) (+ (second top-left) 3))]
+                (value-at board [i j])))))
 
 ; Write the function (valid-values-for board coordinates) that returns a
 ; set with all valid numbers for the square at coordinates.
